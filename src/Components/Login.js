@@ -88,7 +88,7 @@ function Login() {
                 });
             }
             catch (e) {
-                toast.error("Facing cors error...try to refresh the page", {
+                toast.error("Facing cors error...try again", {
                     position: "top-center",
                     autoClose: 4000,
                     hideProgressBar: false,
