@@ -8,6 +8,7 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 import { TokenCheck } from '../TokenCheck';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { ToastContainer, toast } from 'react-toastify';
+import url from '../Constants/url'
 
 const Product = () => {
   const [prods, setProds] = useState([]);
@@ -21,7 +22,7 @@ const Product = () => {
       setLoading(true);
       await axios({
         method: 'put',
-        url: "https://renteasy121.herokuapp.com/cart",
+        url: `${url}/cart`,
         data: data,
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
@@ -58,7 +59,7 @@ const Product = () => {
       return;
     try {
       setLoading(true);
-      const data = await axios.get(`https://renteasy121.herokuapp.com/getProductsByCategory?category=${category}`);
+      const data = await axios.get(`${url}/getProductsByCategory?category=${category}`);
       setProds(data.data);
       setLoading(false);
     }
@@ -74,7 +75,7 @@ const Product = () => {
     }
     try {
       setLoading(true);
-      const data = await axios.get(`https://renteasy121.herokuapp.com/getProductsOnSearch/${query}`);
+      const data = await axios.get(`${url}/getProductsOnSearch/${query}`);
       setProds(data.data);
       setLoading(false);
     }
@@ -86,7 +87,7 @@ const Product = () => {
   async function checkAvailability(value) {
     try {
       setLoading(true);
-      const data = await axios.get(`https://renteasy121.herokuapp.com/checkisavailable?availability=${value}`);
+      const data = await axios.get(`${url}/checkisavailable?availability=${value}`);
       setProds(data.data);
       setLoading(false);
     }
@@ -99,7 +100,7 @@ const Product = () => {
     try {
       setLoading(true);
       // console.log(env);
-      const data = await axios.get(`https://renteasy121.herokuapp.com/getAllProducts`);
+      const data = await axios.get(`${url}/getAllProducts`);
       setProds(data.data);
       // console.log(data.data);
       setLoading(false);

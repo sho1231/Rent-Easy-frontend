@@ -8,6 +8,7 @@ import { TokenCheck } from '../TokenCheck';
 import { NavLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import url from '../Constants/url'
 
 // import dotenv from 'dotenv';
 
@@ -31,7 +32,7 @@ function Login() {
     async function authUser(values) {
         try {
             setLoading(true);
-            const data = await axios.post("https://renteasy121.herokuapp.com/users/signin", values);
+            const data = await axios.post(`${url}/users/signin`, values);
             localStorage.setItem("token", data.data.token);
             localStorage.setItem('isAdmin', false);
             navigate("/products");
@@ -67,7 +68,7 @@ function Login() {
     async function authAdmin(values) {
         try {
             setLoading(true);
-            const data = await axios.post("https://renteasy121.herokuapp.com/admin/signin", values);
+            const data = await axios.post(`${url}/admin/signin`, values);
             localStorage.setItem("token", data.data.token);
             setLoading(false);
             localStorage.setItem("isAdmin", true);

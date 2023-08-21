@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Spinner from 'react-spinner-material';
 import { TokenCheck } from '../TokenCheck';
 import { ToastContainer, toast } from 'react-toastify';
+import url from '../Constants/url'
 
 
 export default function Register() {
@@ -27,7 +28,7 @@ export default function Register() {
         var data;
         try {
             setLoading(true);
-            data = await axios.post('https://renteasy121.herokuapp.com/users/signup', values);
+            data = await axios.post(`${url}/users/signup`, values);
             if (data.status === 200) {
                 setLoading(false);
                 toast.success("Registartion success...please wait redirecting to login page", {
@@ -75,7 +76,7 @@ export default function Register() {
         var data;
         try {
             setLoading(true);
-            data = await axios.post('https://renteasy121.herokuapp.com/admin/signup', values);
+            data = await axios.post(`${url}/admin/signup`, values);
             if (data.status === 200) {
                 setLoading(false);
                 toast.success("Registartion success...please wait redirecting to login page", {

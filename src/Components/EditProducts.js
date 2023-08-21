@@ -6,6 +6,7 @@ import Spinner from 'react-spinner-material';
 import { ToastContainer, toast } from 'react-toastify';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import 'react-toastify/dist/ReactToastify.css';
+import url from '../Constants/url'
 
 
 const EditProducts = () => {
@@ -24,7 +25,7 @@ const EditProducts = () => {
         try {
             const data = await axios({
                 method: 'GET',
-                url: `https://renteasy121.herokuapp.com/admin/${id}`,
+                url: `${url}/admin/${id}`,
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -42,7 +43,7 @@ const EditProducts = () => {
             const data = await axios({
                 method: "put",
                 data: values,
-                url: "https://renteasy121.herokuapp.com/admin/modifyProducts",
+                url: `${url}/admin/modifyProducts`,
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('token')}`
                 }

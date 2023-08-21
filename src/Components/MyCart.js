@@ -9,6 +9,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import url from '../Constants/url'
 
 const MyCart = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const MyCart = () => {
       setLoading(true);
       const data = await axios({
         method: 'GET',
-        url: "https://renteasy121.herokuapp.com/getProductsFromCart",
+        url: `${url}/getProductsFromCart`,
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -98,14 +99,14 @@ function Display({ prods, setProds, total, setTotal }) {
     }
     const { key } = await axios({
       method: "GET",
-      url: "https://renteasy121.herokuapp.com/rkey",
+      url: `${url}/rkey`,
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
     const { data } = await axios({
       method: "POST",
-      url: "https://renteasy121.herokuapp.com/checkout",
+      url: `${url}/checkout`,
       data: {
         total_amount: total
       },
@@ -158,7 +159,7 @@ function Display({ prods, setProds, total, setTotal }) {
       setEditCartLoading(true);
       const data = await axios({
         method: 'PUT',
-        url: "https://renteasy121.herokuapp.com/editcart",
+        url: `${url}/editcart`,
         data: values,
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
@@ -175,7 +176,7 @@ function Display({ prods, setProds, total, setTotal }) {
       // })
       const data2 = await axios({
         method: "GET",
-        url: "https://renteasy121.herokuapp.com/getProductsFromCart",
+        url: `${url}/getProductsFromCart`,
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -209,7 +210,7 @@ function Display({ prods, setProds, total, setTotal }) {
       setDelLoading(true);
       const data = await axios({
         method: "DELETE",
-        url: "https://renteasy121.herokuapp.com/deleteFromCart",
+        url: `${url}/deleteFromCart`,
         data: {
           prod_id: id
         },
@@ -228,7 +229,7 @@ function Display({ prods, setProds, total, setTotal }) {
       // })
       const data2 = await axios({
         method: "GET",
-        url: "https://renteasy121.herokuapp.com/getProductsFromCart",
+        url: `${url}/getProductsFromCart`,
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -254,24 +255,15 @@ function Display({ prods, setProds, total, setTotal }) {
   }
 
   function isValidDate(startDate) {
-    let today = new Date().toLocaleString();
-    console.log(typeof (today), typeof (startDate));
-    // console.log(today.toLocaleString());
-    today = today.split(",")[0].split("/");
-    let month = today[0];
-    let date = today[1];
-    let year = today[2];
-    today[0] = year;
-    today[1] = month;
-    today[2] = date;
-    if (today[1].length === 1)
-      today[1] = '0' + today[1]
-    if (today[2].length === 1)
-      today[2] = '0' + today[2];
-    today = today.join('-');
-    if (today <= startDate)
-      return true;
-    return false;
+    console.log(startDate);
+    const [y,m,d]=startDate.split("-");
+    const today=new Date();
+    const [ty,tm,td]=[today.getFullYear(),(today.getMonth())+1,today.getDate()];
+    if(ty>Number(y)||tm>Number(m)||td>Number(d)){
+      console.log(1);
+      return false;
+    }
+    return true;
   }
   const navigate = useNavigate();
   return (

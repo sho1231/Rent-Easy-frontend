@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import url from '../Constants/url'
 
 const Admin = () => {
     document.title = "Your products";
@@ -28,7 +29,7 @@ const Admin = () => {
             setLoading(true);
             const data = await axios({
                 method: "GET",
-                url: `https://renteasy121.herokuapp.com/admin/getRentedProducts?isRented=${values}`,
+                url: `${url}/admin/getRentedProducts?isRented=${values}`,
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -46,7 +47,7 @@ const Admin = () => {
             setLoading(true);
             const data = await axios({
                 method: 'get',
-                url: "https://renteasy121.herokuapp.com/admin/getProducts",
+                url: `${url}/admin/getProducts`,
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('token')}`
                 }

@@ -10,7 +10,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-
+import url from '../Constants/url'
+import { DatePicker } from '@syncfusion/ej2-react-calendars';
 
 
 const ProdDetails = () => {
@@ -32,7 +33,7 @@ const ProdDetails = () => {
       setLoading(true);
       const data = await axios({
         method: 'GET',
-        url: `https://renteasy121.herokuapp.com/${id}`,
+        url: `${url}/${id}`,
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -89,24 +90,15 @@ function price_calculator(values, prod) {
 }
 
 function isValidDate(startDate) {
-  let today = new Date().toLocaleString();
-  console.log(typeof (today), typeof (startDate));
-  // console.log(today.toLocaleString());
-  today = today.split(",")[0].split("/");
-  let month = today[0];
-  let date = today[1];
-  let year = today[2];
-  today[0] = year;
-  today[1] = month;
-  today[2] = date;
-  if (today[1].length === 1)
-    today[1] = '0' + today[1]
-  if (today[2].length === 1)
-    today[2] = '0' + today[2];
-  today = today.join('-');
-  if (today <= startDate)
-    return true;
-  return false;
+  console.log(startDate);
+  const [y,m,d]=startDate.split("-");
+  const today=new Date();
+  const [ty,tm,td]=[today.getFullYear(),(today.getMonth())+1,today.getDate()];
+  if(ty>Number(y)||tm>Number(m)||td>Number(d)){
+    console.log(1);
+    return false;
+  }
+  return true;
 }
 
 
@@ -119,7 +111,7 @@ function Display({ prod }) {
       setLoading(true);
       const data = await axios({
         method: "PUT",
-        url: "https://renteasy121.herokuapp.com/cart",
+        url: `${url}/cart`,
         data: values,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -206,6 +198,7 @@ function Display({ prod }) {
                 const errors = {};
                 if (!values.startDate) errors.startDate = "This field is required";
                 else if (!isValidDate(values.startDate)) errors.startDate = "Invalid start date";
+                console.log("start date",!isValidDate(values.startDate))
                 if (!values.endDate) errors.endDate = "This field is required";
                 else if (values.startDate > values.endDate) errors.endDate = "Invalid end date";
                 if (!values.quantity || isNaN(values.quantity) || values.quantity < 1) errors.quantity = "This field is required";
