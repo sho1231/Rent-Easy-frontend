@@ -1,2 +1,2 @@
-const url="https://renteasy-api.onrender.com";
+const url="https://api-reneasy.onrender.com";
 export default url;
